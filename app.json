@@ -8,9 +8,11 @@
     "scheme": "hefestmobile",
     "userInterfaceStyle": "automatic",
     "ios": {
-      "icon": "./assets/expo.icon"
+      "icon": "./assets/expo.icon",
+      "bundleIdentifier": "bg.adviz.hefest"
     },
     "android": {
+      "package": "bg.adviz.hefest",
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
@@ -41,6 +43,13 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "ed43f178-7f6b-4d53-9335-3bb49761bfa9"
+      }
+    },
+    "owner": "hexchap"
   }
 }
