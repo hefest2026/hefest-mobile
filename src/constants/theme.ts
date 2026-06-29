@@ -14,6 +14,12 @@ export const Colors = {
     backgroundElement: '#F0F0F3',
     backgroundSelected: '#E0E1E6',
     textSecondary: '#60646C',
+    // Amber primary (web shadcn oklch(0.555 0.163 49)) on the neutral stone scale.
+    brand: '#B45309',
+    brandPressed: '#92400E',
+    onBrand: '#FFFFFF',
+    destructive: '#DC2626',
+    border: '#E4E1DC',
   },
   dark: {
     text: '#ffffff',
@@ -21,6 +27,11 @@ export const Colors = {
     backgroundElement: '#212225',
     backgroundSelected: '#2E3135',
     textSecondary: '#B0B4BA',
+    brand: '#F59E0B',
+    brandPressed: '#D97706',
+    onBrand: '#1A1206',
+    destructive: '#F87171',
+    border: '#2E2A26',
   },
 } as const;
 
