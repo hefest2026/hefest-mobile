@@ -1,24 +1,45 @@
-import { SafeAreaView, StyleSheet } from 'react-native';
+import { useState } from 'react';
+import { SafeAreaView, StyleSheet, View } from 'react-native';
 
+import { AccountTab } from '@/components/common/account-tab';
+import { EventsLayout } from '@/components/common/events-layout';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 
+const tabs = [
+  { id: 'events', label: 'Събития' },
+  { id: 'notifications', label: 'Известия' },
+];
+
 export default function HomeTabScreen() {
   const theme = useTheme();
+  const [activeTab, setActiveTab] = useState('events');
 
   return (
-    <ThemedView style={[styles.container, { backgroundColor: theme.background }]}> 
-      <SafeAreaView style={styles.safeArea}>
-        <ThemedText type="title" style={styles.title}>
-          Начало
-        </ThemedText>
-        <ThemedText type="default" themeColor="textSecondary" style={styles.subtitle}>
-          Добре дошли! Тук ще виждате вашите важни училищни събития и известия.
-        </ThemedText>
-      </SafeAreaView>
-    </ThemedView>
+    <EventsLayout tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab}>
+      <ThemedView style={[styles.container, { backgroundColor: theme.background }]}> 
+        <SafeAreaView style={styles.safeArea}>
+          {activeTab === 'account' ? (
+            <AccountTab
+              me={{ full_name: 'Александра Петрова', email: 'alex@example.com', role: 'student' }}
+            />
+          ) : (
+            <View style={styles.content}>
+              <ThemedText type="title" style={styles.title}>
+                {activeTab === 'events' ? 'Събития' : 'Известия'}
+              </ThemedText>
+              <ThemedText type="default" themeColor="textSecondary" style={styles.subtitle}>
+                {activeTab === 'events'
+                  ? 'Добре дошли! Тук ще виждате вашите важни училищни събития и известия.'
+                  : 'Проверете всяка нова актуализация за вашите събития.'}
+              </ThemedText>
+            </View>
+          )}
+        </SafeAreaView>
+      </ThemedView>
+    </EventsLayout>
   );
 }
 
@@ -35,6 +56,9 @@ const styles = StyleSheet.create({
     maxWidth: MaxContentWidth,
     alignSelf: 'center',
     justifyContent: 'center',
+    gap: Spacing.two,
+  },
+  content: {
     gap: Spacing.two,
   },
   title: {
