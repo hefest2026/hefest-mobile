@@ -1,51 +1,122 @@
 /**
- * Below are the colors that are used in the app. The colors are defined in the light and dark mode.
- * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
+ * Theme tokens for the Hefest / EventHub mobile app.
+ *
+ * This palette merges the mobile redesign tokens with the HEF-41 auth flow
+ * tokens so both sets of components can share a single theme object.
  */
-
-import '@/global.css';
 
 import { Platform } from 'react-native';
 
-export const Colors = {
+export interface Palette {
+  // Redesign surface / content colors
+  background: string;
+  surface: string;
+  foreground: string;
+  muted: string;
+  subtle: string;
+  border: string;
+  // Redesign brand + accent colors
+  primary: string;
+  primaryForeground: string;
+  secondary: string;
+  secondaryForeground: string;
+  ring: string;
+  destructive: string;
+  // Redesign status intent colors
+  successBg: string;
+  successFg: string;
+  warningBg: string;
+  warningFg: string;
+  dangerBg: string;
+  dangerFg: string;
+  neutralBg: string;
+  neutralFg: string;
+  overlay: string;
+  // HEF-41 auth flow aliases (kept for compatibility with auth components)
+  text: string;
+  backgroundElement: string;
+  backgroundSelected: string;
+  textSecondary: string;
+  brand: string;
+  brandPressed: string;
+  onBrand: string;
+}
+
+export const Colors: { light: Palette; dark: Palette } = {
   light: {
-    text: '#000000',
-    background: '#ffffff',
-    backgroundElement: '#F0F0F3',
-    backgroundSelected: '#E0E1E6',
-    textSecondary: '#60646C',
-    // Amber primary (web shadcn oklch(0.555 0.163 49)) on the neutral stone scale.
-    brand: '#B45309',
+    // page + surfaces
+    background: '#F9FAFB', // page background (gray-50)
+    surface: '#FFFFFF', // cards, headers, inputs
+    foreground: '#111827', // primary text (gray-900)
+    muted: '#4B5563', // secondary text (gray-600)
+    subtle: '#6B7280', // tertiary text (gray-500)
+    border: '#E5E7EB', // gray-200
+    // brand
+    primary: '#B4531F', // warm orange (oklch 0.555 0.163 49)
+    primaryForeground: '#FFFFFF',
+    secondary: '#F3F4F6',
+    secondaryForeground: '#1F2937',
+    ring: '#B4531F',
+    destructive: '#DC2626',
+    // status intents (bg + fg)
+    successBg: '#DCFCE7',
+    successFg: '#15803D',
+    warningBg: '#FEF9C3',
+    warningFg: '#A16207',
+    dangerBg: '#FEF2F2',
+    dangerFg: '#B91C1C',
+    neutralBg: '#F3F4F6',
+    neutralFg: '#374151',
+    overlay: 'rgba(0,0,0,0.45)',
+    // HEF-41 aliases
+    text: '#111827',
+    backgroundElement: '#FFFFFF',
+    backgroundSelected: '#F3F4F6',
+    textSecondary: '#4B5563',
+    brand: '#B4531F',
     brandPressed: '#92400E',
     onBrand: '#FFFFFF',
-    destructive: '#DC2626',
-    border: '#E4E1DC',
   },
   dark: {
-    text: '#ffffff',
-    background: '#000000',
-    backgroundElement: '#212225',
-    backgroundSelected: '#2E3135',
-    textSecondary: '#B0B4BA',
-    brand: '#F59E0B',
-    brandPressed: '#D97706',
-    onBrand: '#1A1206',
-    destructive: '#F87171',
-    border: '#2E2A26',
+    background: '#171412',
+    surface: '#272220',
+    foreground: '#FAFAF9',
+    muted: '#A8A29E',
+    subtle: '#8A837D',
+    border: '#34302C',
+    primary: '#C25E28',
+    primaryForeground: '#FFFFFF',
+    secondary: '#2E2A27',
+    secondaryForeground: '#FAFAF9',
+    ring: '#C25E28',
+    destructive: '#F05252',
+    successBg: '#14321F',
+    successFg: '#86EFAC',
+    warningBg: '#3B310A',
+    warningFg: '#FDE047',
+    dangerBg: '#3B1717',
+    dangerFg: '#FCA5A5',
+    neutralBg: '#2E2A27',
+    neutralFg: '#D6D3D1',
+    overlay: 'rgba(0,0,0,0.6)',
+    // HEF-41 aliases
+    text: '#FAFAF9',
+    backgroundElement: '#272220',
+    backgroundSelected: '#2E2A27',
+    textSecondary: '#A8A29E',
+    brand: '#C25E28',
+    brandPressed: '#A64D20',
+    onBrand: '#FFFFFF',
   },
-} as const;
+};
 
-export type ThemeColor = keyof typeof Colors.light & keyof typeof Colors.dark;
+export type ThemeColor = keyof Palette;
 
 export const Fonts = Platform.select({
   ios: {
-    /** iOS `UIFontDescriptorSystemDesignDefault` */
     sans: 'system-ui',
-    /** iOS `UIFontDescriptorSystemDesignSerif` */
     serif: 'ui-serif',
-    /** iOS `UIFontDescriptorSystemDesignRounded` */
     rounded: 'ui-rounded',
-    /** iOS `UIFontDescriptorSystemDesignMonospaced` */
     mono: 'ui-monospace',
   },
   default: {
@@ -70,6 +141,14 @@ export const Spacing = {
   four: 24,
   five: 32,
   six: 64,
+} as const;
+
+/** Web uses `rounded-none` on primitives; pills keep a small radius. */
+export const Radius = {
+  none: 0,
+  sm: 2,
+  md: 4,
+  pill: 999,
 } as const;
 
 export const BottomTabInset = Platform.select({ ios: 50, android: 80 }) ?? 0;

@@ -7,12 +7,14 @@
 
 import { apiClient } from '@/api/client';
 import type {
+  ChangePasswordRequest,
   LoginRequest,
   ProvidersResponse,
   RegisterRequest,
   RegisterResponse,
   TokenResponse,
-  UserMe,
+  UserMeResponse,
+  UserUpdateRequest,
 } from '@/types/auth';
 
 const SKIP_AUTH = { skipAuth: true } as const;
@@ -20,11 +22,7 @@ const SKIP_AUTH = { skipAuth: true } as const;
 export async function register(
   body: RegisterRequest,
 ): Promise<RegisterResponse> {
-  const { data } = await apiClient.post<RegisterResponse>(
-    '/register',
-    body,
-    SKIP_AUTH,
-  );
+  const { data } = await apiClient.post<RegisterResponse>('/register', body, SKIP_AUTH);
   return data;
 }
 
@@ -38,11 +36,7 @@ export async function verifyEmail(token: string): Promise<TokenResponse> {
 }
 
 export async function login(body: LoginRequest): Promise<TokenResponse> {
-  const { data } = await apiClient.post<TokenResponse>(
-    '/login',
-    body,
-    SKIP_AUTH,
-  );
+  const { data } = await apiClient.post<TokenResponse>('/login', body, SKIP_AUTH);
   return data;
 }
 
@@ -50,15 +44,25 @@ export async function logout(refreshToken: string): Promise<void> {
   await apiClient.post('/auth/logout', { refresh_token: refreshToken }, SKIP_AUTH);
 }
 
-export async function fetchMe(): Promise<UserMe> {
-  const { data } = await apiClient.get<UserMe>('/users/me');
+export async function logoutAll(refreshToken: string): Promise<void> {
+  await apiClient.post('/auth/logout-all', { refresh_token: refreshToken }, SKIP_AUTH);
+}
+
+export async function changePassword(body: ChangePasswordRequest): Promise<void> {
+  await apiClient.post('/auth/change-password', body);
+}
+
+export async function fetchMe(): Promise<UserMeResponse> {
+  const { data } = await apiClient.get<UserMeResponse>('/users/me');
+  return data;
+}
+
+export async function updateMe(body: UserUpdateRequest): Promise<UserMeResponse> {
+  const { data } = await apiClient.patch<UserMeResponse>('/users/me', body);
   return data;
 }
 
 export async function fetchProviders(): Promise<ProvidersResponse> {
-  const { data } = await apiClient.get<ProvidersResponse>(
-    '/auth/providers',
-    SKIP_AUTH,
-  );
+  const { data } = await apiClient.get<ProvidersResponse>('/auth/providers', SKIP_AUTH);
   return data;
 }

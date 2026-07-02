@@ -7,12 +7,17 @@ import {
   useRouter,
   useSegments,
 } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import { useColorScheme, View } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { queryClient } from '@/api/query-client';
 import { AuthProvider, useAuth } from '@/auth/auth-context';
 import { AnimatedSplashOverlay } from '@/components/animated-icon';
+
+const styles = { flex: { flex: 1 } } as const;
 
 /**
  * Reads session state and steers navigation between the signed-out `(auth)`
@@ -34,7 +39,7 @@ function RootNavigator() {
     if (status === 'signedOut' && !inAuthGroup && !onVerify) {
       router.replace('/login');
     } else if (status === 'signedIn' && (inAuthGroup || onVerify)) {
-      router.replace('/');
+      router.replace('/events');
     }
   }, [status, segments, router]);
 
@@ -50,14 +55,17 @@ export default function RootLayout() {
   const colorScheme = useColorScheme();
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <QueryClientProvider client={queryClient}>
-        <AuthProvider>
-          <RootNavigator />
-        </AuthProvider>
-      </QueryClientProvider>
-    </ThemeProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <SafeAreaProvider>
+        <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+          <QueryClientProvider client={queryClient}>
+            <AuthProvider>
+              <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
+              <RootNavigator />
+            </AuthProvider>
+          </QueryClientProvider>
+        </ThemeProvider>
+      </SafeAreaProvider>
+    </GestureHandlerRootView>
   );
 }
-
-const styles = { flex: { flex: 1 } } as const;

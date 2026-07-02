@@ -56,6 +56,6 @@ describe('SsoButtons', () => {
     loginWithSso.mockResolvedValueOnce(true);
     renderWithQuery(<SsoButtons />);
     fireEvent.press(await screen.findByText('Continue with Google'));
-    await waitFor(() => expect(loginWithSso).toHaveBeenCalledWith('google'));
+    await waitFor(() => expect(loginWithSso).toHaveBeenCalledWith('Google'));
   });
 });

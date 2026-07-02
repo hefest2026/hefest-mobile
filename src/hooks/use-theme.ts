@@ -1,14 +1,12 @@
 /**
- * Learn more about light and dark modes:
+ * Returns the active color palette (light/dark) for the current color scheme.
  * https://docs.expo.dev/guides/color-schemes/
  */
 
-import { Colors } from '@/constants/theme';
+import { Colors, type Palette } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 
-export function useTheme() {
+export function useTheme(): Palette {
   const scheme = useColorScheme();
-  const theme = scheme === 'unspecified' ? 'light' : scheme;
-
-  return Colors[theme];
+  return scheme === 'dark' ? Colors.dark : Colors.light;
 }
