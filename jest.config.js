@@ -13,8 +13,12 @@ module.exports = {
     'src/components/text-field.tsx',
     'src/components/form-banner.tsx',
     'src/components/sso-buttons.tsx',
+    'src/components/event-card.tsx',
+    'src/components/list-states.tsx',
+    'src/events/**/*.{ts,tsx}',
     'src/app/(auth)/**/*.tsx',
     'src/app/verify-email.tsx',
+    'src/app/(app)/**/*.tsx',
   ],
   coveragePathIgnorePatterns: ['/node_modules/', '/__tests__/'],
   coverageThreshold: {

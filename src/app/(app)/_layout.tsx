@@ -13,7 +13,7 @@ export default function AppLayout() {
         tabBarInactiveTintColor: theme.textSecondary,
       }}
     >
-      <Tabs.Screen name="index" options={{ title: 'Events' }} />
+      <Tabs.Screen name="events" options={{ title: 'Events' }} />
     </Tabs>
   );
 }
