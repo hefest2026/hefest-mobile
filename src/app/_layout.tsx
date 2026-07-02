@@ -16,7 +16,6 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { queryClient } from '@/api/query-client';
 import { AuthProvider, useAuth } from '@/auth/auth-context';
 import { AnimatedSplashOverlay } from '@/components/animated-icon';
-import { SessionProvider } from '@/context/session';
 
 const styles = { flex: { flex: 1 } } as const;
 
@@ -40,7 +39,7 @@ function RootNavigator() {
     if (status === 'signedOut' && !inAuthGroup && !onVerify) {
       router.replace('/login');
     } else if (status === 'signedIn' && (inAuthGroup || onVerify)) {
-      router.replace('/index');
+      router.replace('/events');
     }
   }, [status, segments, router]);
 
@@ -61,10 +60,8 @@ export default function RootLayout() {
         <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
           <QueryClientProvider client={queryClient}>
             <AuthProvider>
-              <SessionProvider>
-                <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
-                <RootNavigator />
-              </SessionProvider>
+              <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
+              <RootNavigator />
             </AuthProvider>
           </QueryClientProvider>
         </ThemeProvider>
