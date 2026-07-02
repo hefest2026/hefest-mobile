@@ -1,26 +1,28 @@
 /**
  * Theme tokens for the Hefest / EventHub mobile app.
  *
- * Ported from the web app's `src/index.css` oklch design tokens (converted to
- * hex) plus the gray-scale page chrome the web screens use directly
- * (bg-gray-50, border-gray-200, text-gray-900, status pills, etc.).
+ * This palette merges the mobile redesign tokens with the HEF-41 auth flow
+ * tokens so both sets of components can share a single theme object.
  */
 
 import { Platform } from 'react-native';
 
 export interface Palette {
+  // Redesign surface / content colors
   background: string;
   surface: string;
   foreground: string;
   muted: string;
   subtle: string;
   border: string;
+  // Redesign brand + accent colors
   primary: string;
   primaryForeground: string;
   secondary: string;
   secondaryForeground: string;
   ring: string;
   destructive: string;
+  // Redesign status intent colors
   successBg: string;
   successFg: string;
   warningBg: string;
@@ -30,6 +32,14 @@ export interface Palette {
   neutralBg: string;
   neutralFg: string;
   overlay: string;
+  // HEF-41 auth flow aliases (kept for compatibility with auth components)
+  text: string;
+  backgroundElement: string;
+  backgroundSelected: string;
+  textSecondary: string;
+  brand: string;
+  brandPressed: string;
+  onBrand: string;
 }
 
 export const Colors: { light: Palette; dark: Palette } = {
@@ -58,6 +68,14 @@ export const Colors: { light: Palette; dark: Palette } = {
     neutralBg: '#F3F4F6',
     neutralFg: '#374151',
     overlay: 'rgba(0,0,0,0.45)',
+    // HEF-41 aliases
+    text: '#111827',
+    backgroundElement: '#FFFFFF',
+    backgroundSelected: '#F3F4F6',
+    textSecondary: '#4B5563',
+    brand: '#B4531F',
+    brandPressed: '#92400E',
+    onBrand: '#FFFFFF',
   },
   dark: {
     background: '#171412',
@@ -81,6 +99,14 @@ export const Colors: { light: Palette; dark: Palette } = {
     neutralBg: '#2E2A27',
     neutralFg: '#D6D3D1',
     overlay: 'rgba(0,0,0,0.6)',
+    // HEF-41 aliases
+    text: '#FAFAF9',
+    backgroundElement: '#272220',
+    backgroundSelected: '#2E2A27',
+    textSecondary: '#A8A29E',
+    brand: '#C25E28',
+    brandPressed: '#A64D20',
+    onBrand: '#FFFFFF',
   },
 };
 

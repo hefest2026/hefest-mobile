@@ -8,7 +8,9 @@ export function useColorScheme() {
   const [hasHydrated, setHasHydrated] = useState(false);
 
   useEffect(() => {
-    // Intentional: flip to the real scheme once hydrated on web (static render support).
+    // Intentional: flip a one-shot hydration flag once mounted on the client so
+    // static (server) render returns a stable default. Standard Expo web pattern.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setHasHydrated(true);
   }, []);
 

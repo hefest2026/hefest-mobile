@@ -118,7 +118,7 @@ export default function SignupScreen() {
                 </Button>
 
                 <Text style={[styles.footerText, { color: c.muted }]}>
-                  Вече имате акаунт? <TextLink onPress={() => router.replace('/')}>Влезте</TextLink>
+                  Вече имате акаунт? <TextLink onPress={() => router.replace('/login')}>Влезте</TextLink>
                 </Text>
               </CardContent>
             </Card>

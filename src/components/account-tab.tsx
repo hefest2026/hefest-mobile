@@ -19,7 +19,7 @@ export function AccountTab() {
 
   const handleSignOut = () => {
     signOut();
-    router.replace('/');
+    router.replace('/login');
   };
 
   return (
