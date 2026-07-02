@@ -46,7 +46,7 @@ from `@react-navigation/native` (see `src/app/_layout.tsx`).
 
 ## Backend (hefest-api)
 
-Contract verified against `openapi.json` — endpoints differ from earlier assumptions.
+Contract verified against the hefest-api OpenAPI schema — endpoints differ from earlier assumptions.
 
 - Base URL (local dev): `http://localhost:8000`
 - **Auth (JWT Bearer):**
