@@ -8,6 +8,7 @@ export function useColorScheme() {
   const [hasHydrated, setHasHydrated] = useState(false);
 
   useEffect(() => {
+    // Intentional: flip to the real scheme once hydrated on web (static render support).
     setHasHydrated(true);
   }, []);
 

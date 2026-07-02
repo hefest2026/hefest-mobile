@@ -1,56 +1,74 @@
-# Welcome to your Expo app 👋
+# hefest-mobile — EventHub
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Mobile client for **EventHub / Hefest**, a school events & workshops platform. This app is a
+React Native (Expo) port of the `hefest-frontend` web app — same features, same Bulgarian UI,
+built for iOS, Android, and web from a single codebase.
 
-## Get started
+## Features
 
-1. Install dependencies
+- **Login / Sign up** — email + password and social sign-in buttons (mock auth).
+- **Role picker** — after signing in, continue as an **Organizer** or a **Student**.
+- **Organizer area** (bottom tabs):
+  - *Панел* — create / edit / delete draft events, then publish them through a confirmation dialog.
+  - *Събития* — the platform-wide feed of published events (yours vs. others).
+  - *Акаунт* — profile & security settings.
+- **Student area** (bottom tabs):
+  - *Събития* — browse published events, register, join the waitlist when full, or cancel
+    (cancelling promotes the first waitlisted student).
+  - *Акаунт* — profile & security settings.
+- **Terms** and **Privacy** legal pages.
+- Light/dark theme that follows the system color scheme.
 
-   ```bash
-   npm install
-   ```
+> **Data:** the app runs entirely on **in-memory mock data** (a React context store seeded with
+> sample events), mirroring the web app. There is no backend/network call yet — the documented
+> `hefest-api` integration (JWT, push, etc.) is future work.
 
-2. Start the app
+## Stack
 
-   ```bash
-   npx expo start
-   ```
+- **Expo SDK 54** (Expo Go) + **Expo Router** (file-based routing under `src/app/`)
+- **React Native 0.81** · **React 19.1** · **TypeScript 5.9**
+- Navigation via `expo-router` `Stack` + `Tabs`; theme APIs come from `@react-navigation/native`
+- State via React Context (`session`, `events`) — no Redux, no server state library yet
+- Package manager: **npm**
 
-In the output, you'll find options to open the app in a
+## Project structure
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```
+src/
+  app/                     # Expo Router routes (file = screen)
+    _layout.tsx            # Root Stack + providers (theme, session, events)
+    index.tsx              # Login
+    signup.tsx             # Sign up
+    role.tsx               # Organizer / Student picker
+    terms.tsx, privacy.tsx # Legal pages
+    organizer/             # Organizer bottom tabs
+      _layout.tsx          #   tabs shell
+      index.tsx            #   create/publish drafts + your published events
+      all-events.tsx       #   platform-wide feed
+      account.tsx          #   account
+    student/               # Student bottom tabs
+      _layout.tsx          #   tabs shell
+      index.tsx            #   published events feed (register/waitlist/cancel)
+      account.tsx          #   account
+  components/
+    ui/                    # Button, Card, Input, Textarea, Field, Separator, Badge, TextLink
+    brand-header.tsx, account-tab.tsx, legal-page.tsx
+    event-form.tsx, event-card.tsx, publish-confirmation.tsx
+  context/                 # session (mock auth) + events (mock store) providers
+  constants/theme.ts       # color palette (light/dark), spacing, radius
+  hooks/                   # use-color-scheme, use-theme
+  lib/                     # types.ts, format.ts (date/time helpers)
+assets/                    # icons & splash
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Getting started
 
-### Other setup steps
-
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+```bash
+npm install
+npm start          # Expo dev server — scan the QR with Expo Go
+npm run android    # open on an Android emulator/device
+npm run ios        # open on an iOS simulator/device
+npm run web        # run in a browser
+npm run lint       # expo lint (ESLint)
+npx tsc --noEmit   # type-check
+```
