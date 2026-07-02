@@ -42,5 +42,8 @@ example
 /ios
 /android
 
+# build artifacts
+*.apk
+
 # test coverage
 /coverage
