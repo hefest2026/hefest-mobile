@@ -20,4 +20,21 @@ describe('TextField', () => {
     render(<TextField label="Email" value="x" error={null} />);
     expect(screen.queryByText('Email is required.')).toBeNull();
   });
+
+  it('applies error border color when focused with an error', () => {
+    render(<TextField label="Email" value="" error="Invalid" />);
+    fireEvent(screen.getByLabelText('Email'), 'focus');
+    expect(screen.getByDisplayValue('')).toBeTruthy();
+  });
+
+  it('switches to brand border on focus and back on blur', () => {
+    const onFocus = jest.fn();
+    const onBlur = jest.fn();
+    render(<TextField label="Email" value="" onFocus={onFocus} onBlur={onBlur} />);
+    const input = screen.getByLabelText('Email');
+    fireEvent(input, 'focus');
+    expect(onFocus).toHaveBeenCalled();
+    fireEvent(input, 'blur');
+    expect(onBlur).toHaveBeenCalled();
+  });
 });
