@@ -48,12 +48,12 @@ export function SsoButtons({ onError }: { onError?: (message: string) => void })
       </View>
       {providers.map((provider) => (
         <Button
-          key={provider.id}
+          key={provider.name}
           variant="secondary"
           title={`Continue with ${provider.name}`}
-          loading={pendingId === provider.id}
+          loading={pendingId === provider.name}
           disabled={pendingId !== null}
-          onPress={() => onPress(provider.id)}
+          onPress={() => onPress(provider.name)}
         />
       ))}
     </View>
